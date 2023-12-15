@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./Gallery.scss";
 import { IImage } from "../../types";
-import { CardsList } from "../CardsList";
-import { Button } from "../Button";
+import { CardsList } from "../../components/CardsList";
+import { Button } from "../../components/Button";
 import { loadImages } from "../../services/api";
 
 const mockedImages = [
@@ -131,12 +131,7 @@ export const Gallery = () => {
   const [error, setError] = useState('');
   const [images, setImages] = useState<IImage[] | []>([]);
   // const [images, setImages] = useState<IImage[] | []>(mockedImages);
-  const [columns, setColumns] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const onChangeColumns = (count: number) => {
-    setColumns(count);
-  };
 
   const loadMore = async () => {
     const pageNumber = currentPage + 1;
@@ -172,11 +167,7 @@ export const Gallery = () => {
         <h2>LOADING...</h2>
       ) : (
         <>
-          <div className="gallery__template-btns">
-            <Button title="3 col" handlerClick={() => onChangeColumns(3)} />
-            <Button title="5 col" handlerClick={() => onChangeColumns(5)} />
-          </div>
-          <CardsList cardsList={images} columnsCount={columns} />
+          <CardsList cardsList={images} />
           <div className="gallery__load-more-btn">
             <Button title="LOAD MORE" handlerClick={loadMore} />
           </div>

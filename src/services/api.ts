@@ -60,11 +60,11 @@ export const downloadImage = async (id: string, url: string) => {
   }
 };
 
-export const searchImages = async (searchParam: string): Promise<IImage[]> => {
+export const searchImages = async (searchParam = '', pageNumber = 1): Promise<IImage[]> => {
   try {
     const response = await API.get(`/search/photos/?client_id=${
       import.meta.env.VITE_ACCESS_KEY
-    }&query=${searchParam}&per_page=30`);
+    }&query=${searchParam}&page=${pageNumber}&per_page=30`);
 
     return response.data.results;
   } catch (error) {

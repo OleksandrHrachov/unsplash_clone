@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import "./ImagePage.scss";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import closeIcon from "../../assets/icons/icon-close.svg";
-import { Button } from "../Button";
+import { Button } from "../../components/Button";
 import { IOneImage } from "../../types/imageType";
 import { downloadImage, getImageById } from "../../services/api";
 
 export const ImagePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const {state} = useLocation();
+  const {prevLocation} = state;
 
   const [imageData, setImageData] = useState<IOneImage | null>(null);
   const [error, setError] = useState("");
@@ -40,8 +42,8 @@ export const ImagePage = () => {
     }
   }, [imageData]);
 
-  const goHome = () => {
-    navigate("/");
+  const goBack = () => {
+    navigate(prevLocation);
   };
 
   const date = imageData && new Date(imageData.created_at);
@@ -60,7 +62,7 @@ export const ImagePage = () => {
     });
 
   return (
-    <div className="image-page" onClick={goHome}>
+    <div className="image-page" onClick={goBack}>
       <Link to="/" className="image-page__close-link">
         <img className="image-page__close-icon" src={closeIcon} alt="X" />
       </Link>

@@ -2,18 +2,24 @@ import { useState } from "react";
 import { Button } from "../Button";
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
-import { searchImages } from "../../services/api";
+// import { searchImages } from "../../services/api";
+import { useAppDispatch } from "../../hook";
+import { changeTemplate } from "../../store/viewSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [search, setSearch] = useState("");
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handlerOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
   const handlerSubmit = async () => {
-    const serchResult = await searchImages(search);
-    console.log('SEARCH RESULT =>', serchResult);
+    const query = search.split(' ').join('-');
+    navigate(`/search/${query}`)
+    setSearch('');
   };
 
   return (
@@ -40,6 +46,24 @@ export const Header = () => {
           onChange={(e) => handlerOnChange(e)}
         />
         <Button title="SEARCH" handlerClick={handlerSubmit} />
+      </div>
+      <div className="header__view-btns">
+        <Button handlerClick={() => dispatch(changeTemplate(3))}>
+          <div className="header__view-template">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </Button>
+        <Button handlerClick={() => dispatch(changeTemplate(5))}>
+          <div className="header__view-template">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </Button>
       </div>
     </div>
   );

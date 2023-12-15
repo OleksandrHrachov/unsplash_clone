@@ -2,13 +2,15 @@ import { FC, useMemo } from "react";
 import "./CardsList.scss";
 import { CardsColumn } from "../CardsColumn";
 import { IImage } from "../../types";
+import {useAppSelector} from '../../hook';
 
 interface IProps {
   cardsList: IImage[];
-  columnsCount: number;
 }
 
-export const CardsList: FC<IProps> = ({ cardsList, columnsCount }) => {
+export const CardsList: FC<IProps> = ({ cardsList }) => {
+  const {columnsCount} = useAppSelector(state => state.viewSlice);
+
   const cardsGroupsLists = useMemo(() => {
     const result = [];
     const step = cardsList.length / columnsCount;
