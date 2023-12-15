@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./SearchGallery.scss";
 import { useParams } from "react-router-dom";
 import { IImage } from "../../types";
 import { searchImages } from "../../services/api";
 import { CardsList } from "../../components/CardsList";
 import { Button } from "../../components/Button";
-
-// const serchResult = await searchImages(search);
-// console.log("SEARCH RESULT =>", serchResult);
 
 export const SearchGallery = () => {
   const { query } = useParams();
