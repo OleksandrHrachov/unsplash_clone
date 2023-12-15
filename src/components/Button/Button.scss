@@ -8,6 +8,8 @@
   font-size: 14px;
   font-weight: 500;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
 
   &--primary {
     border: 1px solid var(--gray);

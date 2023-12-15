@@ -17,8 +17,11 @@ export const Header = () => {
   };
 
   const handlerSubmit = async () => {
-    const query = search.split(' ').join('-');
-    navigate(`/search/${query}`)
+    const trimString = search.trim();
+    const query = trimString.split(' ').join('-');
+    if (trimString) {
+      navigate(`/search/${query}`)
+    }
     setSearch('');
   };
 
