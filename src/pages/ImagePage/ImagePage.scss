@@ -1,0 +1,122 @@
+.image-page {
+  position: absolute;
+  background-color: var(--gray-05);
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 100%;
+  padding: 20px;
+
+  &__close {
+    &-link {
+      position: relative;
+      top: 40px;
+      left: 20px;
+    }
+
+    &-icon {
+      border: 1px solid white;
+      padding: 5px;
+      border-radius: 50%;
+    }
+  }
+
+  &__inner {
+    position: relative;
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 90vh;
+  }
+
+  &__header {
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+
+    &-info {
+      display: flex;
+      align-items: center;
+
+      &-creator {
+        &-photo {
+          margin-right: 6px;
+          width: 40px;
+          height: 40px;
+          border: 1px solid var(--gray);
+          border-radius: 50%;
+          overflow: hidden;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+
+    &-download-btn {
+      
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      border: 1px solid var(--gray);
+      text-transform: uppercase;
+
+      a {
+        display: block;
+        text-decoration: none;
+        color: var(--gray);
+        width: 100%;
+        height: 100%;
+        padding: 6px;
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          border-color: black;
+        }
+      }
+    }
+  }
+
+  &__image-wrapper {
+    margin: 0 auto;
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+  }
+
+  &__image {
+    object-fit: contain;
+    width: 100%;
+
+    &-date {
+      line-height: 20px;
+      margin-bottom: 20px;
+    }
+
+    &-descr {
+      line-height: 20px;
+      margin-bottom: 20px;
+    }
+
+    &-tags {
+      display: flex;
+      gap: 10px;
+      &-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+  }
+}

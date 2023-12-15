@@ -1,0 +1,22 @@
+.gallery {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  
+  &__load-more-btn {
+    padding-top: 20px;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__btn-arrow {
+    width: 20px;
+    height: 20px;
+  }
+}
+

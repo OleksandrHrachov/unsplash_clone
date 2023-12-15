@@ -1,0 +1,36 @@
+:root {
+  font-family: Helvetica, Arial, sans-serif;
+  --gutter: 24px;
+
+  // color
+  --gray: #767676;
+  --gray-light: #dedcdc;
+  --gray-05: rgba(0, 0, 0, 0.5);
+}
+
+html {
+  min-height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+}
+
+.container {
+  padding: 15px 0;
+}
+

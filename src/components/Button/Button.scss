@@ -1,0 +1,35 @@
+.custom-btn {
+  padding: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+
+  &--primary {
+    border: 1px solid var(--gray);
+    text-transform: uppercase;
+
+    @media (hover: hover) {
+      &:hover{
+        border-color: black;
+      }
+    }
+  }
+
+  &--tag {
+    background-color: var(--gray-light);
+    text-transform: capitalize;
+
+    @media (hover: hover) {
+      &:hover{
+        background-color: var(--gray);
+      }
+    }
+  }
+}
