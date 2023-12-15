@@ -1,0 +1,16 @@
+.cards-list {
+  
+  &__images-wrapper {
+    display: grid;
+    gap: var(--gutter);
+    padding: var(--gutter) 0;
+
+    &--3-columns {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--5-columns {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+}

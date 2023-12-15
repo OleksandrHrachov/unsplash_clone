@@ -1,0 +1,36 @@
+.card {
+  max-width: 100%;
+  position: relative;
+  text-decoration: none;
+  color: var(--gray);
+
+  &__image {
+    display: block;
+    width: 100%;
+  }
+
+  &__image-info {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 10px;
+    left: 10px;
+
+    &-creator {
+      &-photo {
+        margin-right: 6px;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--gray);
+        border-radius: 50%;
+        overflow: hidden;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      &-name {
+        font-size: 14px;
+      }
+    }
+  }
+}
