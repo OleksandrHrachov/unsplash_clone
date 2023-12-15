@@ -1,4 +1,23 @@
 .header {
-  padding: 0 20px;
-  height: 40px;
+  padding: 20px;
+  position: fixed;
+  z-index: 2;
+  background-color: white;
+  top: 0;
+  height: 80px;
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--gray);
+
+  &__search {
+    display: flex;
+
+    &-input {
+      padding: 4px 6px;
+      margin-right: 10px;
+    }
+  }
 }

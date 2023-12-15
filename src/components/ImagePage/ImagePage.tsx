@@ -9,7 +9,6 @@ import { downloadImage, getImageById } from "../../services/api";
 export const ImagePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(useParams());
 
   const [imageData, setImageData] = useState<IOneImage | null>(null);
   const [error, setError] = useState("");
@@ -20,11 +19,12 @@ export const ImagePage = () => {
     try {
       if (id) {
         const resp = await getImageById(id);
-        console.log('resp',resp)
         setImageData(resp);
       }
     } catch (error) {
-      setError(error as string);
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +87,6 @@ export const ImagePage = () => {
                   className="image-page__image"
                   alt={imageData.alt_description}
                   src={imageData.urls.small}
-                  srcSet={`${imageData.urls.small} 768w, ${imageData.urls.raw} 1280w `}
                 />
               </div>
               <div className="image-page__image-info">
@@ -116,9 +115,10 @@ export const ImagePage = () => {
             </div>
           </>
         )}
+        {error && <h2>{error}</h2>}
       </div>
 
-      {error && <h2>{error}</h2>}
+      
     </div>
   );
 };

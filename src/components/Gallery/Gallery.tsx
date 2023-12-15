@@ -134,8 +134,6 @@ export const Gallery = () => {
   const [columns, setColumns] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log("columns", columns);
-
   const onChangeColumns = (count: number) => {
     setColumns(count);
   };

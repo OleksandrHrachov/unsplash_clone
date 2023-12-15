@@ -27,7 +27,6 @@ export const getImageById = async (id: string): Promise<IOneImage> => {
     const response = await API.get(`/photos/${id}/?client_id=${
       import.meta.env.VITE_ACCESS_KEY
     }`);
-    console.log('response image =>', response);
 
     return response.data;
   } catch (error) {
@@ -55,9 +54,20 @@ export const downloadImage = async (id: string, url: string) => {
     const downloadBtn = document.querySelector('.image-page__header-download-btn');
     if (downloadBtn && !downloadBtn.innerHTML) {
       downloadBtn.append(a);
-
     }
   } catch (error) {
     return "Unable to load image";
   }
 };
+
+export const searchImages = async (searchParam: string): Promise<IImage[]> => {
+  try {
+    const response = await API.get(`/search/photos/?client_id=${
+      import.meta.env.VITE_ACCESS_KEY
+    }&query=${searchParam}&per_page=30`);
+
+    return response.data.results;
+  } catch (error) {
+    throw new Error('Oops! Something went wrong');
+  }
+}
