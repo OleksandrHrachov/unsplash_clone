@@ -1,16 +1,50 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import "./Header.scss";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hook";
 import { changeTemplate } from "../../store/viewSlice";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "../../services/api";
+import { IUserAuthData } from "../../types";
 
 export const Header = () => {
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { columnsCount } = useAppSelector((state) => state.viewSlice);
+  const [userData, setUserData] = useState<IUserAuthData | null>(null);
+  const [error, setError] = useState("");
+
+  const getToken = async (authCode: string) => {
+    try {
+      const userRespData = await getAuth(authCode);
+      setUserData(userRespData);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+
+        setTimeout(() => {
+          setError('');
+        }, 5000);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("authData");
+    if (storedUserData) {
+      const data = JSON.parse(storedUserData);
+      setUserData(data);
+    } else {
+      const searchParams = new URLSearchParams(document.location.search);
+      const code = searchParams.get("code");
+
+      if (code && !storedUserData) {
+        getToken(code);
+      }
+    }
+  }, []);
 
   const handlerOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -62,6 +96,7 @@ export const Header = () => {
 
   return (
     <div className="header">
+      {error && <p className="header__error">{error}</p>}
       <NavLink to="/">
         <svg
           width="32"
@@ -109,6 +144,25 @@ export const Header = () => {
             <div></div>
           </div>
         </Button>
+      </div>
+      <div>
+        {userData ? (
+          <div className="header__user">
+            <div className="header__user-avatar">
+            {userData.userName[0]}
+            </div>
+            <p className="header__user-name">{userData.userName}</p>
+          </div>
+        ) : (
+          <Link
+            className="header__registration-btn"
+            to={`${import.meta.env.VITE_AUTH_URL}?client_id=${
+              import.meta.env.VITE_ACCESS_KEY
+            }&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}&response_type=code&scope=public`}
+          >
+            REGISTRATION
+          </Link>
+        )}
       </div>
     </div>
   );

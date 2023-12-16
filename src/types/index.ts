@@ -1,3 +1,8 @@
+export interface IUserAuthData {
+  token: string;
+  userName: string;
+}
+
 export interface IImage {
   id: string;
   slug: string;

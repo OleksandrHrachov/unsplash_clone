@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IImage } from "../types";
+import { IImage, IUserAuthData } from "../types";
 import { IOneImage } from "../types/imageType";
 
 const API = axios.create({
@@ -69,5 +69,35 @@ export const searchImages = async (searchParam = '', pageNumber = 1): Promise<II
     return response.data.results;
   } catch (error) {
     throw new Error('Oops! Something went wrong');
+  }
+}
+
+
+
+export const getAuth = async (authCode: string): Promise<IUserAuthData> => {
+  try {
+    const resp = await axios({
+      method: 'POST',
+      url: import.meta.env.VITE_AUTH_TOKEN_URL,
+      params: {
+        client_id: import.meta.env.VITE_ACCESS_KEY,
+        client_secret: import.meta.env.VITE_SECRET_KEY,
+        redirect_uri: import.meta.env.VITE_REDIRECT_URL,
+        code: authCode,
+        grant_type: 'authorization_code'
+      }
+    })
+
+    const authData= resp.data;
+    const userData = {
+      token: authData.access_token,
+      userName: authData.username
+    };
+
+    localStorage.setItem('authData', JSON.stringify(userData));
+    return userData;
+
+  } catch (error) {
+    throw new Error('Oops! Something went wrong with registration. Please try later.');
   }
 }
