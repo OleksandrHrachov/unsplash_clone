@@ -5,12 +5,13 @@ import closeIcon from "../../assets/icons/icon-close.svg";
 import { Button } from "../../components/Button";
 import { IOneImage } from "../../types/imageType";
 import { downloadImage, getImageById } from "../../services/api";
+import like from "../../assets/icons/like.svg";
 
 export const ImagePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const {state} = useLocation();
-  const {prevLocation} = state;
+  const { state } = useLocation();
+  const { prevLocation } = state;
 
   const [imageData, setImageData] = useState<IOneImage | null>(null);
   const [error, setError] = useState("");
@@ -38,9 +39,9 @@ export const ImagePage = () => {
 
   const handlerSubmit = async (tag: string) => {
     const trimString = tag.trim();
-    const query = trimString.split(' ').join('-');
+    const query = trimString.split(" ").join("-");
     if (trimString) {
-      navigate(`/search/${query}`)
+      navigate(`/search/${query}`);
     }
   };
 
@@ -77,58 +78,68 @@ export const ImagePage = () => {
       <div className="image-page__inner" onClick={(e) => e.stopPropagation()}>
         {isLoading ? (
           <h2>LOADING...</h2>
-        ) : (imageData &&
-          <>
-            <div className="image-page__header">
-              <div className="image-page__header-info">
-                <img
-                  className="image-page__header-info-creator-photo"
-                  src={imageData.user.profile_image.small}
-                />
-                <span className="image-page__header-info-creator-name">
-                  {imageData.user.name}
-                </span>
+        ) : (
+          imageData && (
+            <>
+              <div className="image-page__header">
+                <div className="image-page__header-info">
+                  <img
+                    className="image-page__header-info-creator-photo"
+                    src={imageData.user.profile_image.small}
+                  />
+                  <span className="image-page__header-info-creator-name">
+                    {imageData.user.name}
+                  </span>
+                </div>
+                <div className="image-page__header-download-btn"></div>
               </div>
-              <div className="image-page__header-download-btn"></div>
-            </div>
-            <div className="image-page__main">
-              <div className="image-page__image-wrapper">
-                <img
-                  className="image-page__image"
-                  alt={imageData.alt_description}
-                  src={imageData.urls.small}
-                />
-              </div>
-              <div className="image-page__image-info">
-                <p className="image-page__image-date">
-                  Published: {formattedDate}
-                </p>
-                <p className="image-page__image-descr">
-                  {imageData.description}
-                </p>
-                <div className="image-page__image-tags">
-                  
-                  <div className="image-page__image-tags-btns">
-                    {tags.map((tag, index) => {
-                      return (
-                        <Button
-                          key={tag + index}
-                          variant="tag"
-                          title={tag}
-                          handlerClick={() => handlerSubmit(tag) }
-                        />
-                      );
-                    })}
+              <div className="image-page__main">
+                <div className="image-page__image-wrapper">
+                  <img
+                    className="image-page__image"
+                    alt={imageData.alt_description}
+                    src={imageData.urls.small}
+                  />
+                </div>
+                <div className="image-page__image-info">
+                  <div className="image-page__image-info-top">
+                    <p className="image-page__image-date">
+                      Published: {formattedDate}
+                    </p>
+                    <div className="image-page__image-info-likes-info">
+                      <img
+                        className="image-page__image-info-likes-img"
+                        src={like}
+                        alt="like"
+                      />
+                      <span>{imageData.likes}</span>
+                    </div>
+                  </div>
+
+                  <p className="image-page__image-descr">
+                    {imageData.description}
+                  </p>
+                  <div className="image-page__image-tags">
+                    <div className="image-page__image-tags-btns">
+                      {tags.map((tag, index) => {
+                        return (
+                          <Button
+                            key={tag + index}
+                            variant="tag"
+                            title={tag}
+                            handlerClick={() => handlerSubmit(tag)}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </>
+            </>
+          )
         )}
         {error && <h2>{error}</h2>}
       </div>
-
-      
     </div>
   );
 };

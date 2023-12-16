@@ -1,9 +1,19 @@
+@import '../../utils/mixins.scss';
+
 .cards-list {
   
   &__images-wrapper {
     display: grid;
     gap: var(--gutter);
     padding: var(--gutter) 0;
+
+    &--1-columns {
+      grid-template-columns: 1fr;
+
+      @include onTablet {
+        width: 100%;
+      }
+    }
 
     &--3-columns {
       grid-template-columns: repeat(3, 1fr);
