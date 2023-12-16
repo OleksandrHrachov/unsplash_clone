@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "../Button";
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
-// import { searchImages } from "../../services/api";
 import { useAppDispatch } from "../../hook";
 import { changeTemplate } from "../../store/viewSlice";
 import { useNavigate } from "react-router-dom";

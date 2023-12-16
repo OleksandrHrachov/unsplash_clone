@@ -36,6 +36,14 @@ export const ImagePage = () => {
     loadImageData();
   }, []);
 
+  const handlerSubmit = async (tag: string) => {
+    const trimString = tag.trim();
+    const query = trimString.split(' ').join('-');
+    if (trimString) {
+      navigate(`/search/${query}`)
+    }
+  };
+
   useEffect(() => {
     if (imageData?.links.download_location) {
       downloadImage(imageData.id, imageData.links.download_location);
@@ -107,7 +115,7 @@ export const ImagePage = () => {
                           key={tag + index}
                           variant="tag"
                           title={tag}
-                          handlerClick={() => console.log("click tag =>", tag)}
+                          handlerClick={() => handlerSubmit(tag) }
                         />
                       );
                     })}
