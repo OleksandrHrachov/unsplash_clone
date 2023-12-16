@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IState {
-  columnsCount: 3 | 5;
+  columnsCount: 1 | 3 | 5;
 }
 
 const initialState: IState = {
-  columnsCount: 3,
+  columnsCount: 1,
 }
 
 const viewSlice = createSlice({
   name: 'viewSlice',
   initialState,
   reducers: {
-    changeTemplate(state, action: PayloadAction<3 | 5>): void {
+    changeTemplate(state, action: PayloadAction<1 | 3 | 5>): void {
       state.columnsCount = action.payload;
     }
   }

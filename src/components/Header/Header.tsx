@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
-import { useAppDispatch } from "../../hook";
+import { useAppDispatch, useAppSelector } from "../../hook";
 import { changeTemplate } from "../../store/viewSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ export const Header = () => {
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { columnsCount } = useAppSelector((state) => state.viewSlice);
 
   const handlerOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -17,12 +18,47 @@ export const Header = () => {
 
   const handlerSubmit = async () => {
     const trimString = search.trim();
-    const query = trimString.split(' ').join('-');
+    const query = trimString.split(" ").join("-");
     if (trimString) {
-      navigate(`/search/${query}`)
+      navigate(`/search/${query}`);
     }
-    setSearch('');
+    setSearch("");
   };
+
+  const onKeyDownHandlerSubmit = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      const trimString = search.trim();
+      const query = trimString.split(" ").join("-");
+      if (trimString) {
+        navigate(`/search/${query}`);
+      }
+      setSearch("");
+    }
+  };
+
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      dispatch(changeTemplate(1));
+    } else if (window.innerWidth > 768 && columnsCount < 3) {
+      dispatch(changeTemplate(3));
+    }
+  };
+
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      dispatch(changeTemplate(3));
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [columnsCount]);
 
   return (
     <div className="header">
@@ -46,18 +82,25 @@ export const Header = () => {
           type="text"
           value={search}
           onChange={(e) => handlerOnChange(e)}
+          onKeyDown={(e) => onKeyDownHandlerSubmit(e)}
         />
         <Button title="SEARCH" handlerClick={handlerSubmit} />
       </div>
       <div className="header__view-btns">
-        <Button handlerClick={() => dispatch(changeTemplate(3))}>
+        <Button
+          customClassName={columnsCount === 3 ? "header__view-btn--active" : ""}
+          handlerClick={() => dispatch(changeTemplate(3))}
+        >
           <div className="header__view-template">
             <div></div>
             <div></div>
             <div></div>
           </div>
         </Button>
-        <Button handlerClick={() => dispatch(changeTemplate(5))}>
+        <Button
+          customClassName={columnsCount === 5 ? "header__view-btn--active" : ""}
+          handlerClick={() => dispatch(changeTemplate(5))}
+        >
           <div className="header__view-template">
             <div></div>
             <div></div>

@@ -6,6 +6,7 @@ interface IProps {
   handlerClick: () => void;
   variant?: "primary" | "tag";
   children?: React.ReactNode;
+  customClassName?: string;
 }
 
 export const Button: FC<IProps> = ({
@@ -13,9 +14,10 @@ export const Button: FC<IProps> = ({
   handlerClick,
   variant = "primary",
   children,
+  customClassName = ''
 }) => {
   return (
-    <div className={`custom-btn custom-btn--${variant}`} onClick={handlerClick}>
+    <div className={`${customClassName} custom-btn custom-btn--${variant}`} onClick={handlerClick}>
       {title ? title : children}
     </div>
   );
