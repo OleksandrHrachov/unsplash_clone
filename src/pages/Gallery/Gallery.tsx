@@ -46,7 +46,7 @@ export const Gallery = () => {
     setIsLoading(true);
     const res = await loadImages();
     if (typeof res !== "string") {
-      setImages([...images, ...res]);
+      setImages(res);
     } else {
       setError(res);
     }
